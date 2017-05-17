@@ -1,0 +1,13 @@
+Video Only (Podcast/Vodcast/EchoPlayer). Optimized for presenter capture quality (SD);Talking Head;1
+Display Only (Podcast/Vodcast/EchoPlayer). Optimized for detailed PowerPoint presentations;Screen Capture;0
+Display/Video (Podcast/Vodcast/EchoPlayer). Balanced between file size & quality;Talking Head + Screen Capture;1
+Audio Only (Podcast). Balanced between file size & quality;Audio only;0
+Video Only (Podcast/Vodcast/EchoPlayer). Balanced between file size & quality;Talking Head;1
+Dual Display (Podcast/Vodcast/EchoPlayer). Optimized for file size & bandwidth;Dual Screen Capture;0
+Dual Video (Podcast/Vodcast/EchoPlayer) - Balance between file size & quality;Dual Talking Head;1
+Display Only (Podcast/Vodcast/EchoPlayer). Balanced between file size & quality;Screen Capture;0
+Display/Video (Podcast/Vodcast/EchoPlayer). Optimized for quality/full motion video;Talking Head + Screen Capture;1
+Dual Display (Podcast/Vodcast/EchoPlayer). Balanced between file size & quality;Dual Screen Capture;0
+Display Only (Podcast/Vodcast/EchoPlayer). Optimized for high motion;Screen Capture;0
+Dual Video (Podcast/Vodcast/EchoPlayer) - High Quality;Dual Talking Head;1
+Video Only (Podcast/Vodcast/EchoPlayer). Optimized for presenter/procedures capture quality (HD);Talking Head;1
