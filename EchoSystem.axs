@@ -195,6 +195,7 @@ char iFormatHex    = 3  //$01,$23,$45,$67,$89,$ab,$cd,$ef  //Above value, but he
 long tlServerRefresh = 1
 long tlDeviceRefresh = 2
 long tlDeviceHealth  = 3
+long tlProgramLoop = 4
 
 //EchoSystem Server
 integer SERVER_INCOMMING_BUFFER_SIZE = 20000
@@ -222,7 +223,7 @@ char typeUnknown = 0
 char typeProHarwareCapture    = 1
 char typeBasicHardwareCapture = 2
 //integer DEVICE_INCOMMING_BUFFER_SIZE = 20000
-integer DEVICE_INCOMMING_BUFFER_SIZE = 65535
+long DEVICE_INCOMMING_BUFFER_SIZE = 655350
 integer DEVICE_MAX_LOG_ENTRIES = 300
 integer MAX_DEVICE_RESENDS = 3
 integer DEVICE_DEFAULT_HTTP_PORT = 8080
@@ -397,6 +398,7 @@ volatile char ES_eDeviceType
 volatile char ES_eDeviceQuery
 volatile long ES_iDeviceRefreshTime[] = {0}
 volatile long ES_iDeviceHealthTime[] = {60000}  //Every minute
+volatile long ES_iProgramLoopTime[] = {10000} // Every 10 seconds
 volatile char ES_bDevicePersistentSocket
 volatile char ES_bDevicePortOpen
 volatile char ES_bDevicePortBusy
@@ -2740,7 +2742,7 @@ See http://tools.ietf.org/html/rfc2616#section-6 for status codes.  We should re
      }
      
      //Determine the recording type (Scheduled/AdHoc/Monitor)
-     pos1 = find_string(ES_sDeviceIncomingBuffer,'<schedule>',1)
+     pos1 = find_string(ES_sDeviceIncomingBuffer,'<schedule',1)
      if(pos1){
       if(find_string(ES_sDeviceIncomingBuffer,'<type>media</type>',pos1)){  //It is a scheduled recording.
        if([vdvDevice,chRecording] || [vdvDevice,chPaused]){
@@ -3258,6 +3260,7 @@ on[ES_bCurrentPresenters]
 on[ES_bCurrentProductGroup]
 wait 100{
  timeline_create(tlDeviceHealth,ES_iDeviceHealthTime,1,timeline_relative,timeline_repeat)
+ timeline_create(tlProgramLoop, ES_iProgramLoopTime, length_array(ES_iProgramLoopTime), timeline_relative, timeline_repeat)
 }
 
 define_event
@@ -4010,8 +4013,8 @@ data_event[vdvDevice]{
  }
 }
 
-define_program
-wait 10{
+TIMELINE_EVENT[tlProgramLoop]
+{
  if(ES_iDeviceTimeRemaining > 0){
   ES_iDeviceTimeRemaining = ES_iDeviceTimeRemaining - 1
   if((ES_iDeviceTimeRemaining <= ES_iDeviceTimeThreshold) && (ES_iDeviceTimeRemaining > 0)){
